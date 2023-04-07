@@ -1,0 +1,46 @@
+var matches = [[1,3],[2,3],[3,6],[5,6],[5,7],[4,5],[4,8],[4,9],[10,4],[10,9]];
+var n = matches.length;
+var winners = [];
+var losers = [];
+for(i=0;i<n;i++){
+    winners.push(matches[i][0]);
+    losers.push(matches[i][1])
+}
+winners.sort(function(a, b){return a-b});
+losers.sort(function(a, b){return a-b});
+var set2 = new Set(winners)
+var set1 = new Set(losers)
+var winunq = [...set2]
+var losunq = [...set1]
+var l = winunq.length
+var m =losunq.length
+for(i=0;i<l;i++){
+    for(j=0;j<losunq.length;j++){
+        if(winunq[i]==losunq[j]){
+            winunq.splice(i,1)
+        }
+    }
+}
+var lose1game = [];
+for (var i = m ; i > 0; i--) {
+  var k = 0;
+  for (var j = 0; j < losers.length; j++) {
+    if (losunq[i] == losers[j]) {
+      k++;
+      if (k > 1) {
+        break; // exit the inner loop if a duplicate is found
+      }
+    }
+  }
+  if (k == 1) {
+    lose1game.push(losunq[i]); // add unique element to temporary array
+  }
+}
+losunq = lose1game.reverse();
+var result = [winunq,lose1game]
+
+//console.log(winners)
+//console.log(losers)
+//console.log(winunq)
+//console.log(lose1game)
+console.log(result)
